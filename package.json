@@ -6,7 +6,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "brittle test"
+    "test": "brittle test.js"
   },
   "keywords": [
     "reactive-properties",
