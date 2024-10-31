@@ -1,0 +1,26 @@
+{
+  "name": "echo-prop",
+  "version": "1.0.0",
+  "description": "A lightweight library for creating reactive properties with RxJS",
+  "homepage": "https://github.com/zacharygriffee/echo-prop#readme",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "brittle test"
+  },
+  "keywords": [
+    "reactive-properties",
+    "rxjs",
+    "observables",
+    "reactivity",
+    "state-management"
+  ],
+  "author": "Zachary Griffee",
+  "license": "MIT",
+  "dependencies": {
+    "rxjs": "^7.8.1"
+  },
+  "devDependencies": {
+    "brittle": "^3.7.0"
+  }
+}
