@@ -1,6 +1,6 @@
 {
   "name": "echo-prop",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A lightweight library for creating reactive properties with RxJS",
   "homepage": "https://github.com/zacharygriffee/echo-prop#readme",
   "main": "index.js",

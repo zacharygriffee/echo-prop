@@ -7,6 +7,8 @@ EchoProp is a lightweight library that enables reactive properties on JavaScript
 - Automatically creates RxJS observables for property changes.
 - Supports configurable replay counts for observable history.
 - Optional validation for property updates.
+- Option to use existing property values as the initial value.
+- Configurable logging for validation failures.
 
 ## Installation
 
@@ -31,8 +33,9 @@ const target = {};
 // Create a reactive property
 const prop = createEchoProp(target, 'value', 10, {
     replayCount: 1, // Keep 1 previous value in history
-    validate: (newValue, oldValue) => newValue >= 0, // Validation function, // Validation function
-    log: true                  // Enable logging for validation failures
+    validate: (newValue, oldValue) => newValue >= 0, // Validation function
+    log: true, // Enable logging for validation failures
+    useExistingValueAsInitial: true // Use existing value if initialValue is null (default: true)
 });
 
 // Subscribe to changes
@@ -63,7 +66,8 @@ const propertyBook = {
 // Create reactive properties
 const props = createEchoProps(target, propertyBook, {
     replayCount: 1,
-    validate: (newValue, oldValue) => newValue >= 0
+    validate: (newValue, oldValue) => newValue >= 0,
+    useExistingValueAsInitial: true // Use existing value if initialValue is null (default: true)
 });
 
 // Subscribe to a specific property
@@ -86,7 +90,8 @@ Creates a reactive property on the `target` object.
   - `addAsObservableToTarget` (Boolean, default: `true`): Adds the observable to `target` with the name `<propertyName>$`.
   - `replayCount` (Number, default: `1`): Number of previous values the observable will remember.
   - `validate` (Function, default: `null`): Optional validation function with the signature `(newValue, oldValue) => Boolean`.
-  - `log` (Boolean, default: false): If true, logs a warning when validation fails.
+  - `log` (Boolean, default: `false`): If true, logs a warning when validation fails.
+  - `useExistingValueAsInitial` (Boolean, default: `true`): Uses the existing property value as the initial value if `initialValue` is `null` or `undefined`.
 
 Returns an object:
 - `value (Any)`: The current value of the property.

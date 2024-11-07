@@ -94,3 +94,46 @@ test('createEchoProps - should create multiple reactive properties and emit init
     t.is(healthValues.length, 2);
     t.is(healthValues[1], 90);
 });
+
+
+test('createEchoProp initializes with existing property value when initialValue is null', async (t) => {
+    const target = { existingProp: 42 };
+
+    // Create the reactive property with `initialValue` set to `null` and `useExistingValueAsInitial` true (default)
+    const propManager = createEchoProp(target, 'existingProp', null);
+
+    t.is(target.existingProp, 42, 'Property should initialize with the existing value');
+    t.is(propManager.value, 42, 'Internal lastValue should match the existing property value');
+});
+
+test('createEchoProp updates and validates the property correctly', async (t) => {
+    const target = {};
+    const propManager = createEchoProp(target, 'testProp', 10, {
+        validate: (newValue, oldValue) => newValue > oldValue, // Only allow increasing values
+        log: true
+    });
+
+    // Update with a valid value
+    target.testProp = 15;
+    t.is(target.testProp, 15, 'Property should update to 15');
+    t.is(propManager.value, 15, 'Internal lastValue should be updated to 15');
+
+    // Try to update with an invalid value
+    target.testProp = 5;
+    t.is(target.testProp, 15, 'Property should not update to 5 due to validation failure');
+});
+
+test('createEchoProp creates an observable on the target object if configured', async (t) => {
+    const target = {};
+    createEchoProp(target, 'observableProp', 100);
+
+    t.ok(target.observableProp$, 'Observable should be attached to the target');
+
+    let observedValue;
+    const subscription = target.observableProp$.subscribe(value => observedValue = value);
+
+    target.observableProp = 200;
+    t.is(observedValue, 200, 'Observable should emit the updated value');
+
+    subscription.unsubscribe();
+});
